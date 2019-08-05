@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>js继承</title>
+</head>
+<body>
+<script type="text/javascript">
+	/*类式继承*/
+	//构造父类
+	function SuperClass(fname,lname) {
+        this.lastname = lname;
+        this.firstname = fname;
+        function getFirstname() {
+        	return this.firstname;
+        };
+	}
+	//添加父类共享方法
+	SuperClass.prototype.getLastname = function() {
+		return this.lastname;
+	}
+	//构造子类
+	function SubClass(fname) {
+        this.firstname = fname;
+        function getFirstname(){
+        	return this.firstname;
+        }
+        lastname = this.getLastname();
+	}
+	//继承父类
+    SubClass.prototype = new SuperClass("JACK","TOMAS");
+
+    /*组合式继承*/
+    function SuperClass (fname,lname) {
+        this.firstname = fname;
+        this.lastname = lname
+        this.skills = ["walk","breath","talk","work"];
+    }
+    SuperClass.prototype.getLastname = function() {
+    	return this.lastname;
+    }
+    function SubClass (fname) {
+    	lname = this.getLastname();
+        this.firstname = fname;
+        SuperClass.call(this,fname,lname);    //构造函数式继承父类
+    }
+    SubClass.prototype = new SuperClass("LALA","WOODIE");    //类式继承，子类原型继承父类
+
+    /*寄生组合式继承*/
+    function inheritObject(o) {
+    	function F() {};
+    	F.prototype = o;
+    	return new F();
+    }
+    function inheritPrototype(SuperClass,SubClass) {
+    	var cache = inheritObject(SuperClass.prototype);
+    	cache.constructor = SubClass;
+    	SubClass.prototype = cache;
+    }
+
+
+
+
+
+    /*页面内容显示*/
+    var cont = document.querySelector("script");
+    var body = document.querySelector("body")
+    body.innerText = cont.innerText;
+</script>
+</body>
+</html>

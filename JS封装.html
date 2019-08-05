@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>封装</title>
+</head>
+<body>
+<script type="text/javascript">
+	var People = function(pname,age,sex,gene){
+        /*私有属性*/
+        var gene = gene;
+        /*私有方法*/
+        function showGene() {
+        	console.log("It's secret!!!");
+        }
+        /*对象公有属性*/
+        this.pname = pname;
+        this.age = age;
+        this.sex = sex;
+        /*特权方法*/
+        this.show = function() {
+        	console.log(gene);
+        }
+	}
+</script>
+</body>
+</html>

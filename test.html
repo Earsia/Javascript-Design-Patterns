@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>test</title>
+</head>
+<body>
+<script type="text/javascript">
+	/*本节主要写了js开发过程中初始的方法*/
+	/*通过类进行实例化*/
+	var test = function(name,age){
+		return {
+			sayName: function(){
+				this.name = name;
+				this.sex = "male";
+				console.log(name);
+			},
+			sayAge: function(){
+				this.age = age;
+				console.log(age)
+			}
+		}
+	}
+	var test2 = function(name,age){
+			this.sayName = function(){
+				this.name = name;
+				this.sex = "male";
+				console.log(name);
+				return this
+			};
+			this.sayAge =  function(){
+				this.age = age;
+				console.log(age)
+			}
+		
+	}
+
+	/*为了节省空间，选择在原型上添加方法，当再次实例化新的变量时，可通过访问原型调用函数*/
+	// 方式一
+	var test3 = function(name,age) {
+		test3.prototype.sayName = function(){
+			this.name = name;
+			console.log(name);
+			return this;    //实现链式调用
+		};
+		test3.prototype.sayAge = function(){
+			this.age = age;
+			console.log(age);
+			return this;    //实现链式调用
+		}
+
+	}
+	// 方式二
+	var test4 = function(name,age) {
+		test4.prototype = {
+			sayName: function(){
+				this.name = name;
+				console.log(name);
+				return this;
+			},
+			sayAge: function(){
+				this.age = age;
+				console.log(age);
+				return this;
+			}
+		}
+	}
+
+	/*添加addmethod,并实现链式添加*/
+	Function.prototype.addMethod =function(methodName,fn){
+		this[methodName] = fn;
+		return this;
+	}
+	var test5 = new Function();
+	test5.addMethod("sayName",function(strname){
+		this.strname = strname;
+		console.log(strname);
+		return this;
+	});
+	test5.addMethod("sayAge",function(age){
+		this.age = age;
+		console.log(age);
+		return this;
+	})
+
+	/**/
+
+	Function.prototype.addMethod = function(methodName,fn){
+		this.prototype[methodName] = fn;
+		return this;
+	}
+	var test6 = function(){};
+	test6.addMethod("sayAge",function(age){
+		this.age = age;
+		console.log(age);
+		return this;
+	});
+	test6.addMethod("sayName",function(strname){
+		this.strname = strname;
+		console.log(strname);
+		return this;
+	});
+
+    /*00*/
+     
+</script>
+</body>
+</html>
